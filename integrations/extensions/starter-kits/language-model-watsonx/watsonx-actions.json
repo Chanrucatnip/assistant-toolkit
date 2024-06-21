@@ -1,15 +1,16 @@
 {
-  "name": "watsonx extension sample actions",
+  "name": "watsxon.ai-action",
   "type": "action",
   "valid": true,
   "status": "Available",
-  "created": "2023-07-26T00:29:57.573Z",
-  "updated": "2023-07-26T00:34:33.767Z",
+  "created": "2024-06-21T14:17:07.728Z",
+  "updated": "2024-06-21T14:25:47.943Z",
   "language": "en",
-  "skill_id": "d7b6684e-45f0-4fed-967e-c1091494f945",
+  "skill_id": "fb7c641b-64b5-42cf-b57f-95f4b2d8c1d4",
   "workspace": {
     "actions": [
       {
+        "type": "standard",
         "steps": [
           {
             "step": "step_285",
@@ -612,6 +613,7 @@
         "disambiguation_opt_out": false
       },
       {
+        "type": "standard",
         "steps": [
           {
             "step": "step_817",
@@ -625,12 +627,13 @@
             "resolver": {
               "type": "callout",
               "callout": {
-                "path": "/ml/v1/text/generation",
+                "path": "/ml/v1/text/generation_stream",
                 "type": "integration_interaction",
                 "method": "POST",
                 "internal": {
-                  "spec_hash_id": "fee06cd24334b3cb80a4d75c28882b1bdaf910e93ce214f1a4e0d48840e518de",
-                  "catalog_item_id": "4f170e0d-95b5-4f59-9d1d-e52f67ee9352"
+                  "spec_hash_id": "a0c4bc7edb01c8ff165651f82ee8f51064aae76f6a5f399126ad8e14dfe2469a",
+                  "match_scenario": 1,
+                  "catalog_item_id": "0aaa8850-fc91-41e5-81a1-ccd139799bb3"
                 },
                 "request_mapping": {
                   "body": [
@@ -651,36 +654,6 @@
                         "skill_variable": "watsonx_project_id"
                       },
                       "parameter": "project_id"
-                    },
-                    {
-                      "value": {
-                        "skill_variable": "model_parameters_temperature"
-                      },
-                      "parameter": "parameters.temperature"
-                    },
-                    {
-                      "value": {
-                        "skill_variable": "model_parameters_max_new_tokens"
-                      },
-                      "parameter": "parameters.max_new_tokens"
-                    },
-                    {
-                      "value": {
-                        "skill_variable": "model_parameters_min_new_tokens"
-                      },
-                      "parameter": "parameters.min_new_tokens"
-                    },
-                    {
-                      "value": {
-                        "skill_variable": "model_parameters_stop_sequences"
-                      },
-                      "parameter": "parameters.stop_sequences"
-                    },
-                    {
-                      "value": {
-                        "skill_variable": "model_parameters_repetition_penalty"
-                      },
-                      "parameter": "parameters.repetition_penalty"
                     }
                   ],
                   "query": [
@@ -692,7 +665,16 @@
                     }
                   ]
                 },
-                "result_variable": "step_817_result_2"
+                "result_variable": "step_817_result_2",
+                "stream_response_mapping": {
+                  "partial_item":[{
+                      "response_type": "text",
+                      "mapping": [{
+                          "parameter": "text",
+                          "value" : "results[0].generated_text"
+                      }]   
+                  }]
+                }
               }
             },
             "variable": "step_817",
@@ -704,14 +686,7 @@
               "generic": []
             },
             "context": {
-              "variables": [
-                {
-                  "value": {
-                    "expression": "${step_817_result_2.body.results}[0].generated_text"
-                  },
-                  "skill_variable": "model_response"
-                }
-              ]
+              "variables": []
             },
             "handlers": [],
             "resolver": {
@@ -719,20 +694,13 @@
             },
             "variable": "step_606",
             "condition": {
-              "and": [
+              "eq": [
                 {
-                  "eq": [
-                    {
-                      "variable": "step_817_result_2",
-                      "variable_path": "success"
-                    },
-                    {
-                      "scalar": true
-                    }
-                  ]
+                  "variable": "step_817_result_2",
+                  "variable_path": "success"
                 },
                 {
-                  "expression": "${step_817_result_2.body.results}.size() > 0"
+                  "scalar": true
                 }
               ]
             },
@@ -744,14 +712,7 @@
               "generic": []
             },
             "context": {
-              "variables": [
-                {
-                  "value": {
-                    "expression": "null"
-                  },
-                  "skill_variable": "model_response"
-                }
-              ]
+              "variables": []
             },
             "handlers": [],
             "resolver": {
@@ -775,15 +736,24 @@
           },
           {
             "title": "",
+            "privacy": {
+              "enabled": false
+            },
             "variable": "step_606",
             "data_type": "any"
           },
           {
             "title": "No response",
+            "privacy": {
+              "enabled": false
+            },
             "variable": "step_817",
             "data_type": "any"
           },
           {
+            "privacy": {
+              "enabled": false
+            },
             "variable": "step_817_result_2",
             "data_type": "any"
           }
@@ -797,6 +767,7 @@
         "disambiguation_opt_out": false
       },
       {
+        "type": "standard",
         "steps": [
           {
             "step": "step_001",
@@ -893,6 +864,7 @@
         "disambiguation_opt_out": true
       },
       {
+        "type": "standard",
         "steps": [
           {
             "step": "digression_failure",
@@ -1201,6 +1173,7 @@
         "disambiguation_opt_out": true
       },
       {
+        "type": "standard",
         "steps": [
           {
             "step": "danger_word_detected",
@@ -1275,6 +1248,7 @@
         "next_action": "anything_else"
       },
       {
+        "type": "standard",
         "steps": [
           {
             "step": "step_001",
@@ -1362,12 +1336,19 @@
           {
             "type": "synonyms",
             "value": "google/flan-t5-xxl",
-            "synonyms": ["flan-t5-xxl", "t5", "xxl"]
+            "synonyms": [
+              "flan-t5-xxl",
+              "t5",
+              "xxl"
+            ]
           },
           {
             "type": "synonyms",
             "value": "google/flan-ul2",
-            "synonyms": ["flan-ul2", "ul2"]
+            "synonyms": [
+              "flan-ul2",
+              "ul2"
+            ]
           }
         ],
         "fuzzy_match": true
@@ -1580,8 +1561,9 @@
     "learning_opt_out": true
   },
   "description": "created for assistant 05c10d7d-336f-4d33-8cb3-5c53520d61ce",
-  "assistant_id": "67614f79-ba73-4c10-a90f-9b647f797521",
-  "workspace_id": "d7b6684e-45f0-4fed-967e-c1091494f945",
+  "assistant_id": "577b3f36-98da-454c-becb-88970e3bec89",
+  "workspace_id": "fb7c641b-64b5-42cf-b57f-95f4b2d8c1d4",
   "dialog_settings": {},
-  "next_snapshot_version": "1"
+  "next_snapshot_version": "1",
+  "environment_id": "782f075c-8d40-4396-95ca-70fb6b11a544"
 }
